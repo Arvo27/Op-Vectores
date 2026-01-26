@@ -1,0 +1,152 @@
+#include "Vector.hpp"
+#include <iostream>
+#include <cmath>
+
+using std::cout, std::cin, std::sqrt;
+
+Vector::Vector() {
+    // Constructor por default
+    setDim(1);
+    for(int i = 0; i < dim; i++) {
+        enter[i] = 0;
+    }
+}
+
+Vector::Vector(short dim) {
+    setDim(dim);
+    for(int i = 0; i < dim; i++) {
+        enter[i] = 0;
+    }
+}
+
+Vector::Vector(short dim, float valor) {
+    setDim(dim);
+    for(int i = 0; i < dim; i++) {
+        enter[i] = valor;
+    }
+}
+
+void Vector::setDim(short dim){
+    if(dim <= 0 || dim > MAX_DIM) {
+        throw "dimension Invalida";
+    }
+    this->dim = dim;
+}
+
+int Vector::getDim() const{
+    return dim;
+}
+
+void Vector::printDim() const{
+    cout << "(";
+    for(int i = 0; i < dim; i++) {
+        cout << enter[i] << ", ";
+    }
+    cout << "\b\b)";
+}
+
+void Vector::setEnter(int i, float valor) {
+    if(i < 0 || i >= dim) {
+        throw "Index out of bounds";
+    }
+    enter[i] = valor;
+}
+
+float Vector::getEnter(int i) const {
+    if(i < 0 || i >= dim) {
+        throw "Index out of bounds";
+    }
+    return enter[i];
+}
+
+float & Vector::operator[](int i) {
+    if(i < 0 || i >= dim) {
+        throw "Index out of bounds";
+    }
+    return enter[i];
+}
+
+float Vector::operator[](int i) const {
+    return getEnter(i);
+}
+
+void Vector::capture() {
+    for(int i = 0; i < dim; i++) {
+        cout << "Enter the " << i+1 << " element: ";
+        cin >> enter[i];
+    }
+}
+
+Vector Vector::sumVectors(const Vector &b) const{
+    if(dim != b.dim) {
+        throw "The Dimensions are not the same";
+    }
+    Vector result(dim);
+    for(int i = 0; i < dim; i++) {
+        result.enter[i] = enter[i] + b.enter[i];
+    }
+    return result;
+}
+
+Vector Vector::operator+(const Vector &v2) const{
+    return this->sumVectors(v2);
+}
+
+Vector Vector::restVectors(const Vector &b) const{
+    if(dim != b.dim) {
+        throw "The Dimensions are not the same";
+    }
+    Vector result(dim);
+    for(int i = 0; i < dim; i++) {
+        result.enter[i] = enter[i] - b.enter[i];
+    }
+    return result;
+}
+
+Vector Vector::operator-(const Vector &b) const{
+    return this->restVectors(b);
+}
+
+float Vector::scaleProduct(const Vector &b) const{
+    if(dim != b.dim) {
+        throw "The Dimensions are not the same";
+    }
+    float result = 0;
+    for(int i = 0; i < dim; i++) {
+        result += enter[i] * b.enter[i];
+    }
+    return result;
+}
+
+float Vector::operator*(const Vector &b) const{
+    return this->scaleProduct(b);
+}
+
+float Vector::obtenerMagnitud() const{
+    float suma = 0;
+    for(int i = 0; i < dim; i++) {
+        suma += enter[i] * enter[i];
+    }
+    return sqrt(suma);
+}
+
+Vector operator*(float scalar, const Vector &v) {
+    Vector result(v.dim);
+    for(int i = 0; i < v.dim; i++) {
+        result.enter[i] = scalar * v.enter[i];
+    }
+    return result;
+}
+
+Vector& Vector::operator++() {
+    for(int i = 0; i < dim; i++) {
+        ++enter[i];
+    }
+    return *this;
+}
+
+Vector Vector::operator++(int) {
+    Vector v = *this;
+    ++(*this);
+    return v;
+}
