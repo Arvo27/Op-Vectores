@@ -67,7 +67,7 @@ int main()
         cout << endl;
         
         cout << "Try the increment operator on the first vector: " << endl;
-        ++v;
+        ++v = s;
         v.printDim();
         cout << endl;
 

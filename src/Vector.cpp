@@ -145,7 +145,7 @@ Vector& Vector::operator++() {
     return *this;
 }
 
-Vector Vector::operator++(int) {
+const Vector Vector::operator++(int) {
     Vector v = *this;
     ++(*this);
     return v;

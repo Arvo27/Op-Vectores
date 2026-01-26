@@ -45,7 +45,7 @@ public:
     float obtenerMagnitud() const;
 
     Vector & operator++();
-    Vector operator++(int);
+    Vector operator++(int) const;
 
 
 private:
