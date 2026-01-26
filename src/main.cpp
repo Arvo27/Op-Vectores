@@ -1,83 +1,86 @@
 #include <iostream>
+#include <iomanip> // Para dar formato a decimales si fuera necesario
 #include "Vector.hpp"
 
-using namespace std;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::cerr;
 
-int main()
-{
+void imprimirSeparador() {
+    cout << "\n------------------------------------------------\n";
+}
+
+int main() {
     try {
-        short dim;
+        short dim1, dim2;
 
-        Vector v;
-        Vector v2;
+        // --- ENTRADA DE DATOS ---
+        cout << "=== CONFIGURACION DE VECTORES ===\n";
+        
+        cout << "Dimension del Vector 1: ";
+        if (!(cin >> dim1)) throw "Entrada no valida para dimension";
+        Vector v1(dim1);
+        v1.capture();
 
-        v.printDim();
-
-        cout << "Set dimension of the vector 1: ";
-        cin >> dim;
-        v.setDim(dim);
-        cout << endl;
-        cout << "Set dimension of the vector 2: ";
-        cin >> dim;
-        v2.setDim(dim);
-        cout << endl;
-
-        cout << "Please enter the elements of the first vector:" << endl;
-        v.capture();
-
-        cout << "Please enter the elements of the second vector:" << endl;
+        cout << "\nDimension del Vector 2: ";
+        if (!(cin >> dim2)) throw "Entrada no valida para dimension";
+        Vector v2(dim2);
         v2.capture();
 
-        v2.setEnter(0, 10.0f);  // Example of using setEnter
-        // cout << "The sum of the vectors is: ";
-        // v.sumVectors(v2).printDim();
-        // cout << endl;
+        // Modificacion de ejemplo solicitada
+        v2.setEnter(0, 10.0f);
 
-        // cout << "The rest of the vectors is: ";
-        // v.restVectors(v2).printDim();
-        // cout << endl;
+        imprimirSeparador();
 
-        // cout << "And the scalar product is: ";
-        // cout << v.scaleProduct(v2);
-        // cout << endl;
+        // --- PROCESAMIENTO Y SALIDA ---
+        cout << "ESTADO INICIAL:\n";
+        cout << "V1: " << v1 << "\n";
+        cout << "V2: " << v2 << " (Modificado index 0 a 10.0)\n";
 
-        cout << "The magnitude of the first vector is: ";
-        cout << v.obtenerMagnitud() << endl;
+        imprimirSeparador();
+        cout << "OPERACIONES ARITMETICAS:\n";
 
-        Vector s;
+        // Suma
+        Vector suma = v1 + v2;
+        cout << "Suma (V1 + V2):      " << suma << "\n";
 
-        s = v + v2;
-        cout << "The sum using operator overloading is: ";
-        s.printDim();
-        cout << endl;
+        // Resta
+        Vector resta = v1 - v2;
+        cout << "Resta (V1 - V2):     " << resta << "\n";
 
-        s = v - v2;
-        cout << "The rest using operator overloading is: ";
-        s.printDim();
-        cout << endl;
+        // Producto Escalar
+        float pEscalar = v1 * v2;
+        cout << "Producto Escalar:    " << pEscalar << "\n";
 
-        float scalarProduct = v * v2;
-        cout << "The scalar product using operator overloading is: ";
-        cout << scalarProduct << endl;
+        // Magnitud
+        cout << "Magnitud de V1:      " << v1.obtenerMagnitud() << "\n";
 
-        // Multiplication by a scalar using friend function using variable scalarProduct
-        Vector scaledVector = scalarProduct * v;
-        cout << "The first vector multiplied by scalar " << scalarProduct << " is: ";
-        scaledVector.printDim();
-        cout << endl;
-        
-        cout << "Try the increment operator on the first vector: " << endl;
-        ++v = s;
-        v.printDim();
-        cout << endl;
+        imprimirSeparador();
+        cout << "OPERACIONES AVANZADAS:\n";
+
+        // Escalado usando el producto escalar previo
+        Vector escalado = pEscalar * v1;
+        cout << "Escalado (V1 * " << pEscalar << "): " << escalado << "\n";
+
+        // Demostracion de incremento
+        cout << "Pre-incremento (++V1): ";
+        cout << ++v1 << "\n";
+
+        //Probando operador << y >>
+        Vector v3;
+        cout << "Ingrese los elementos para un nuevo vector V3 de dimension " << dim1 << ":\n";
+        cin >> v3;
+        cout << "Vector V3 ingresado: " << v3 << "\n";
 
 
-    }catch(const char* msg) {
-        cerr << "Error: " << msg << endl;
-    }catch(...) {
-        cerr << "Unknown error" << endl;
+    } catch (const char* msg) {
+        cerr << "\n[ERROR DE LOGICA]: " << msg << endl;
+    }/* catch (std::bad_alloc& e) {
+        cerr << "\n[ERROR DE MEMORIA]: " << e.what() << endl;
+    }*/catch (...) {
+        cerr << "\n[ERROR]: Ocurrio una excepcion inesperada." << endl;
     }
-
 
     return 0;
 }

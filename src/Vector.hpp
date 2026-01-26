@@ -1,6 +1,6 @@
 #ifndef VECTOR_HPP_INCLUDED
 #define VECTOR_HPP_INCLUDED
-
+#include <iostream>
 #define MAX_DIM 100
 
 
@@ -8,6 +8,8 @@
 
 class Vector {
     friend Vector operator*(float scalar, const Vector &v);
+    friend std::ostream& operator<<(std::ostream &out, const Vector &v);
+    friend std::istream& operator>>(std::istream &in, Vector &v);
 public:
     // Un constructor que no recibe parametros es un constructor por Default
     Vector();
@@ -45,12 +47,12 @@ public:
     float obtenerMagnitud() const;
 
     Vector & operator++();
-    Vector operator++(int) const;
+    Vector operator++(int);
 
 
 private:
     short dim;
-    float enter[MAX_DIM];
+    float *enter;
 
 };
 

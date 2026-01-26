@@ -2,26 +2,34 @@
 #include <iostream>
 #include <cmath>
 
-using std::cout, std::cin, std::sqrt;
+using std::cout;
+using std::cin;
+using std::sqrt;
+
 
 Vector::Vector() {
     // Constructor por default
-    setDim(1);
-    for(int i = 0; i < dim; i++) {
-        enter[i] = 0;
+    setDim(2);
+    try{
+        enter = new float[dim];
+        for(int i = 0; i < dim; ++i) {
+            enter[i] = 0;
+        }
+    } catch (std::bad_alloc& e) {
+        throw;
     }
 }
 
 Vector::Vector(short dim) {
     setDim(dim);
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         enter[i] = 0;
     }
 }
 
 Vector::Vector(short dim, float valor) {
     setDim(dim);
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         enter[i] = valor;
     }
 }
@@ -39,7 +47,7 @@ int Vector::getDim() const{
 
 void Vector::printDim() const{
     cout << "(";
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         cout << enter[i] << ", ";
     }
     cout << "\b\b)";
@@ -71,7 +79,7 @@ float Vector::operator[](int i) const {
 }
 
 void Vector::capture() {
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         cout << "Enter the " << i+1 << " element: ";
         cin >> enter[i];
     }
@@ -82,7 +90,7 @@ Vector Vector::sumVectors(const Vector &b) const{
         throw "The Dimensions are not the same";
     }
     Vector result(dim);
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         result.enter[i] = enter[i] + b.enter[i];
     }
     return result;
@@ -97,7 +105,7 @@ Vector Vector::restVectors(const Vector &b) const{
         throw "The Dimensions are not the same";
     }
     Vector result(dim);
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         result.enter[i] = enter[i] - b.enter[i];
     }
     return result;
@@ -112,7 +120,7 @@ float Vector::scaleProduct(const Vector &b) const{
         throw "The Dimensions are not the same";
     }
     float result = 0;
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         result += enter[i] * b.enter[i];
     }
     return result;
@@ -124,29 +132,56 @@ float Vector::operator*(const Vector &b) const{
 
 float Vector::obtenerMagnitud() const{
     float suma = 0;
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         suma += enter[i] * enter[i];
     }
     return sqrt(suma);
 }
 
+Vector Vector::scaleProduct(float scalar) {
+    Vector result(dim);
+    for(int i = 0; i < dim; ++i) {
+        result.enter[i] = scalar * enter[i];
+    }
+    return result;
+}
+
 Vector operator*(float scalar, const Vector &v) {
     Vector result(v.dim);
-    for(int i = 0; i < v.dim; i++) {
+    for(int i = 0; i < v.dim; ++i) {
         result.enter[i] = scalar * v.enter[i];
     }
     return result;
 }
 
 Vector& Vector::operator++() {
-    for(int i = 0; i < dim; i++) {
+    for(int i = 0; i < dim; ++i) {
         ++enter[i];
     }
     return *this;
 }
 
-const Vector Vector::operator++(int) {
+Vector Vector::operator++(int){
     Vector v = *this;
-    ++(*this);
+    for(int i = 0; i < dim; ++i) {
+        ++enter[i];
+    }
     return v;
+}
+
+std::ostream& operator<<(std::ostream &out, const Vector &v) {
+    out << "(";
+    for(int i = 0; i < v.dim; ++i) {
+        out << v.enter[i] << ", ";
+    }
+    out << "\b\b)";
+    return out;
+}
+
+std::istream& operator>>(std::istream &in, Vector &v) {
+    for(int i = 0; i < v.dim; ++i) {
+        cout << "Enter the " << i+1 << " element: ";
+        in >> v.enter[i];
+    }
+    return in;
 }
