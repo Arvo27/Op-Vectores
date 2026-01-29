@@ -15,6 +15,10 @@ public:
     Vector();
     explicit Vector(short dim);
     Vector(short dim, float valor);
+    Vector(const Vector &v); //Eliminar constructor de copia
+    Vector & operator=(const Vector &v);
+    //Destructor
+    ~Vector();
 
     void setDim(short dim);
     int getDim() const;

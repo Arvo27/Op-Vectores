@@ -16,8 +16,36 @@ Vector::Vector() {
             enter[i] = 0;
         }
     } catch (std::bad_alloc& e) {
-        throw;
+        throw "Memory allocation failed";
     }
+}
+
+Vector::Vector(const Vector &v) {
+    setDim(v.dim);
+    try {
+        enter = new float[dim];
+        for(int i = 0; i < dim; ++i) {
+            enter[i] = v.enter[i];
+        }
+    } catch (std::bad_alloc& e) {
+        throw "Memory allocation failed";
+    }
+}
+
+Vector & Vector::operator=(const Vector &v) {
+    if (this != &v) {
+        delete[] enter; // Liberar memoria existente
+        setDim(v.dim);
+        try {
+            enter = new float[dim];
+            for(int i = 0; i < dim; ++i) {
+                enter[i] = v.enter[i];
+            }
+        } catch (std::bad_alloc& e) {
+            throw "Memory allocation failed";
+        }
+    }
+    return *this; 
 }
 
 Vector::Vector(short dim) {
@@ -32,6 +60,10 @@ Vector::Vector(short dim, float valor) {
     for(int i = 0; i < dim; ++i) {
         enter[i] = valor;
     }
+}
+
+Vector::~Vector() {
+    delete[] enter;
 }
 
 void Vector::setDim(short dim){
