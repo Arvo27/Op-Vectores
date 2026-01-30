@@ -12,15 +12,15 @@ class Vector {
     friend std::istream& operator>>(std::istream &in, Vector &v);
 public:
     // Un constructor que no recibe parametros es un constructor por Default
-    Vector();
-    explicit Vector(short dim);
-    Vector(short dim, float valor);
+    //Vector();
+    //explicit Vector(short dim);
+    explicit Vector(short dim = 2, float valor = 0);
     Vector(const Vector &v); //Eliminar constructor de copia
-    Vector & operator=(const Vector &v);
+
     //Destructor
     ~Vector();
+    Vector & operator=(const Vector &v);
 
-    void setDim(short dim);
     int getDim() const;
 
     void setEnter(int i, float valor);
@@ -57,6 +57,7 @@ public:
 private:
     short dim;
     float *enter;
+    void setDim(short dim);
 
 };
 

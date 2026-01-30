@@ -15,9 +15,7 @@ int main() {
     try {
         short dim1, dim2;
 
-        // --- ENTRADA DE DATOS ---
-        cout << "=== CONFIGURACION DE VECTORES ===\n";
-        
+        //datos
         cout << "Dimension del Vector 1: ";
         if (!(cin >> dim1)) throw "Entrada no valida para dimension";
         Vector v1(dim1);
@@ -28,12 +26,11 @@ int main() {
         Vector v2(dim2);
         v2.capture();
 
-        // Modificacion de ejemplo solicitada
         v2.setEnter(0, 10.0f);
 
         imprimirSeparador();
 
-        // --- PROCESAMIENTO Y SALIDA ---
+        // salidasds
         cout << "ESTADO INICIAL:\n";
         cout << "V1: " << v1 << "\n";
         cout << "V2: " << v2 << " (Modificado index 0 a 10.0)\n";

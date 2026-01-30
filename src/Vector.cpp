@@ -7,34 +7,43 @@ using std::cin;
 using std::sqrt;
 
 
-Vector::Vector() {
-    // Constructor por default
-    setDim(2);
-    try{
-        enter = new float[dim];
-        for(int i = 0; i < dim; ++i) {
-            enter[i] = 0;
-        }
-    } catch (std::bad_alloc& e) {
-        throw "Memory allocation failed";
+// Vector::Vector() {
+//     // Constructor por default
+//     setDim(2);
+//     try{
+//         enter = new float[dim];
+//         for(int i = 0; i < dim; ++i) {
+//             enter[i] = 0;
+//         }
+//     } catch (std::bad_alloc& e) {
+//         throw "Memory allocation failed";
+//     }
+// }
+
+// Vector::Vector(short dim) {
+//     setDim(dim);
+//     for(int i = 0; i < dim; ++i) {
+//         enter[i] = 0;
+//     }
+// }
+
+Vector::Vector(short dim, float valor) {
+    setDim(dim);
+    enter = new float[dim];
+    for(int i = 0; i < dim; ++i) {
+        enter[i] = valor;
     }
 }
 
 Vector::Vector(const Vector &v) {
-    setDim(v.dim);
-    try {
-        enter = new float[dim];
-        for(int i = 0; i < dim; ++i) {
-            enter[i] = v.enter[i];
-        }
-    } catch (std::bad_alloc& e) {
-        throw "Memory allocation failed";
-    }
+    //querermos llamar al operador igualpara optimizar codigo
+    enter = nullptr;
+    *this = v; // llamada al operador de asignacion
 }
 
 Vector & Vector::operator=(const Vector &v) {
     if (this != &v) {
-        delete[] enter; // Liberar memoria existente
+        delete[] enter;
         setDim(v.dim);
         try {
             enter = new float[dim];
@@ -46,20 +55,6 @@ Vector & Vector::operator=(const Vector &v) {
         }
     }
     return *this; 
-}
-
-Vector::Vector(short dim) {
-    setDim(dim);
-    for(int i = 0; i < dim; ++i) {
-        enter[i] = 0;
-    }
-}
-
-Vector::Vector(short dim, float valor) {
-    setDim(dim);
-    for(int i = 0; i < dim; ++i) {
-        enter[i] = valor;
-    }
 }
 
 Vector::~Vector() {
