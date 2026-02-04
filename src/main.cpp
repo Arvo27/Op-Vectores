@@ -75,7 +75,7 @@ int main() {
         short newDim;
         cout << "Ingrese la nueva dimension para redimensionar V3: ";
         if (!(cin >> newDim)) throw "Entrada no valida para dimension";
-        Vector v3Redimensionado = v3.redimensionar(newDim);
+        v3.redimensionar(newDim);
         cout << "V3 redimensionado: " << v3Redimensionado << "\n";
     } catch (const char* msg) {
         cerr << "\n[ERROR DE LOGICA]: " << msg << endl;
