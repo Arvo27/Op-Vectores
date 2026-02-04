@@ -53,6 +53,13 @@ public:
     Vector & operator++();
     Vector operator++(int);
 
+    /*
+    Crear una funcion para redimensionar un vector.
+    Por ejemplo agarrar el vector ya dado por el usuario 
+    y agrandarlo o achicarlo y devolver el vector nuevo
+    */
+   void redimensionar(short newDim);
+
 
 private:
     short dim;

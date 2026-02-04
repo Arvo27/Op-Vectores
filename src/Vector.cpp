@@ -79,6 +79,46 @@ void Vector::printDim() const{
     }
     cout << "\b\b)";
 }
+    /*
+    Explicacion del codigo linea por linea
+    1. Se crea un nuevo arreglo de floats llamado 
+    newVector con el tamaño newDim.
+    2. Se determina la dimensión mínima entre
+    la dimensión actual (dim) y la nueva dimensión (newDim)
+    y se almacena en minDim.
+    3. Se copian los elementos del arreglo antiguo
+    (enter) al nuevo arreglo (newVector) hasta
+    minDim.
+    4. Si la nueva dimensión es mayor que la
+    dimensión actual, se inicializan los elementos
+    adicionales en newVector a 0.
+    5. Se libera la memoria del arreglo antiguo
+    (enter) para evitar fugas de memoria.
+    6. Se actualiza el puntero enter para que apunte
+    al nuevo arreglo (newVector).
+    7. Se actualiza la dimensión del vector
+    llamando a setDim con newDim.
+    8. Finalmente, se devuelve el objeto Vector
+    actualizado.
+    */
+
+void Vector::redimensionar(short newDim){
+    float* newVector = new float[newDim];
+    short minDim = (dim < newDim) ? dim : newDim;
+
+    for(short i = 0; i < minDim; ++i) {
+        newVector[i] = enter[i];
+    }
+
+    for(short i = minDim; i < newDim; ++i) {
+        newVector[i] = 0;
+    }
+
+    delete[] enter;
+    enter = newVector;
+    setDim(newDim);
+}
+
 
 void Vector::setEnter(int i, float valor) {
     if(i < 0 || i >= dim) {
