@@ -76,7 +76,7 @@ int main() {
         cout << "Ingrese la nueva dimension para redimensionar V3: ";
         if (!(cin >> newDim)) throw "Entrada no valida para dimension";
         v3.redimensionar(newDim);
-        cout << "V3 redimensionado: " << v3Redimensionado << "\n";
+        cout << "V3 redimensionado: " << v3 << "\n";
     } catch (const char* msg) {
         cerr << "\n[ERROR DE LOGICA]: " << msg << endl;
     }/* catch (std::bad_alloc& e) {
